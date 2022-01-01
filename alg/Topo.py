@@ -1,5 +1,5 @@
-from alg.Link import *
-from alg.Node import *
+from Link import *
+from Node import *
 import random
 import numpy as np
 class Topo(object):#定义拓扑
@@ -24,9 +24,9 @@ class Topo(object):#定义拓扑
         for edge in self.edge:
             for node in self.node:
                 if node.name==edge.fr:
-                    t=node.index
-                break
-            self.topo[t].append(edge)
+                    self.topo[node.index].append(edge)
+                    break
+            
         return self.topo
     def CreatNodeEdgeSet(self,basic_node_edge_set,c=1000,TrustednodeNum=4,option=1 ):#option=1默认为单向边
         newedge=[] #存储Link结构的边
@@ -42,7 +42,8 @@ class Topo(object):#定义拓扑
         for i in range(len(basic_node_edge_set[0])):
             if i not in TrustedNode:
                 NodeSecurityProbability.append(0.9)
-            NodeSecurityProbability.append(1)
+            else:
+                NodeSecurityProbability.append(1)
 
         for i in range(len(basic_node_edge_set[0])):
             newnode.append(Node(basic_node_edge_set[0][i],i,NodeSecurityProbability[i]))
