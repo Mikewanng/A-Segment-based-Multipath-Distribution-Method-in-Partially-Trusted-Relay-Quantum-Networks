@@ -6,6 +6,9 @@ class Link(object):#定义边
         self.Is_fr_trusted=Is_fr_trusted
         self.Is_to_trusted=Is_to_trusted
         self.Is_connected=Is_connected
+        if self.c>0:
+            self.Is_connected=True
+        
 
 
     def dellink(self):
