@@ -31,7 +31,7 @@ class Alg1:
 
     def alg1n(self,topo,source,des,n):#找出n条路径
         g=topo
-        
+        cur_sp=0
         cur_path=0
         while cur_path<n:
             #转为邻接表

@@ -10,6 +10,8 @@ class Dijkstra:
 
     def dijkstra(self,topo,source,des):
         #初始化起点
+        if source==des:
+            return [des],1
         self._passed.append(source)
         self.topo=topo
         self._visited=[0]*len(topo[0])
@@ -59,6 +61,8 @@ class Dijkstra:
 
     def hopdijkstra(self,topo,source,des):#最短路径
         #初始化起点
+        if source==des:
+            return [des]
         self._passed.append(source)
         self.topo=topo
         self._visited=[0]*len(topo[0])

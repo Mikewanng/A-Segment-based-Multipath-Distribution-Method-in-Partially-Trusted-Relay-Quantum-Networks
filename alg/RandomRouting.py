@@ -37,8 +37,8 @@ class Rr:
         pr=[]
         while curnode != des:
             count+=1
-            if count>10000:
-                return [],0
+            #if count>10000:
+                #return [],0
             dis=[]
             w=[]
             pr=[]

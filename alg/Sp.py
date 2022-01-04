@@ -1,4 +1,4 @@
-#计算安全概率
+#瀹夊叏姒傜巼
 class Sp:
 	def __init__(self):
 		pass
@@ -6,7 +6,7 @@ class Sp:
 	def CalSumSecurityProbability(self,cur_sp,path_sp):
 		return 1-(1-cur_sp)*(1-path_sp)
 
-	def pathsp(self,topo,path):#计算路径安全概率
+	def pathsp(self,topo,path):#璁＄畻璺緞瀹夊叏姒傜巼
 		nodelist=path[1:-1]
 		tmp=1
 		for i in nodelist:
@@ -23,3 +23,9 @@ class Sp:
 					q=j
 					return [p,q]
 		return [p,q]
+	
+	def segsp(self,t):#璁＄畻鍒嗘鐨勮矾寰勭殑瀹夊叏姒傜巼
+		sp=1
+		for i in t:
+			sp*=i[2]
+		return sp
