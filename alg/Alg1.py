@@ -38,7 +38,7 @@ class Alg1:
             topotable=Topo().Toporeduce(g)
             path,path_sp=Dijkstra().dijkstra(topotable,source,des)#返回找到的路径和安全概率
             if path==[]: #意味着没有足够的路径来保证安全概率
-                return self.path,self.sp,self.fsp
+                return [],[],0 #拒绝服务返回0
             else:
                 self.path.append(path)
                 cur_path=len(self.path)
