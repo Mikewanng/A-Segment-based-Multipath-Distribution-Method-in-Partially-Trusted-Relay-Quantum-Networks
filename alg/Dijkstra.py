@@ -46,7 +46,7 @@ class Dijkstra:
         #确定路径
         path=self.getpath(des)
         if path[0]==source and len(path)>=2:
-            return path,self._cost[des]
+            return path,Sp().pathsp(topo,path)
         else:
             return [],0
     def getpath(self,u):   #获取到当前点u的路径

@@ -9,22 +9,24 @@ class Alg2:
 
     def alg2(self,topo,source,des,sth):#找到满足安全概率阈值的路径
         #先调用alg1找出普通多路径的数量
-        path,pathsp,fsp=Alg1().alg1(copy.deepcopy(topo),source,des,sth)
+        tmp=Alg1().alg1(copy.deepcopy(topo),source,des,sth)
+        fsp=tmp[0][2]
         #如果alg1能够满足那么确定路径数量
         if fsp>=sth:
-            path_num=len(path)
+            path_num=len(tmp[0][0])
             return self.alg2n(copy.deepcopy(topo),source,des,path_num)
             
         else:#算法1不能满足，那么依次递增路径数量直到满足sth
             for n in range(1,100):
-                t=self.alg2n(topo,source,des,n)
+                t=self.alg2n(copy.deepcopy(topo),source,des,n)
                 #判断返回路径是否为空
                 for i in t:
                     if i[0]==[]:#无法找到足够路径数量
-                        return [],[],0
+                        return [[[],[],0]]
                 #判断能否满足安全性需求
                 sp=Sp().segsp(t)
                 if sp>=sth:
+                    """
                     #重组格式
                     t0=[]
                     t1=[]
@@ -32,8 +34,8 @@ class Alg2:
                     for i in t:
                         t0.append(i[0])
                         t1.append(i[1])
-                        t2.append(i[2])
-                    return t0,t1,t2
+                        t2.append(i[2])"""
+                    return t
                     
     def alg2n(self,topo,source,des,n):#找出n条路径并返回
         sumlen=1000000
@@ -59,15 +61,16 @@ class Alg2:
 
         #判断是否分段
         if relaynode==sys.maxsize:
-            return [[Alg1().alg1n(copy.deepcopy(topo),source,des,n)]]
-        path,pathsp,fsp=Alg1().alg1n(copy.deepcopy(topo),source,des,n)
-        segpath1,segsp1,segfsp1=Alg1().alg1n(topo,source,relaynode,n)
-        segpath2,segsp2,segfsp2=Alg1().alg1n(topo,relaynode,des,n)
+            return Alg1().alg1n(copy.deepcopy(topo),source,des,n)
+        t=Alg1().alg1n(copy.deepcopy(topo),source,des,n)
+        t1=Alg1().alg1n(topo,source,relaynode,n)
+        tmptopo=copy.deepcopy(topo)
+        t2=Alg1().alg1n(topo,relaynode,des,n)
 
-        if len(segpath1)==n and len(segpath2)==n and segfsp1*segfsp2>fsp:
-                return [[segpath1,segsp1,segfsp1]]+self.alg2n(topo,i,des,n)
+        if len(t1[0][0])==n and len(t2[0][0])==n and t1[0][2]*t2[0][2]>t[0][2]:
+                return t1+self.alg2n(tmptopo,relaynode,des,n)
         
         else:
-            return [[path,pathsp,fsp]]
+            return t
         
 

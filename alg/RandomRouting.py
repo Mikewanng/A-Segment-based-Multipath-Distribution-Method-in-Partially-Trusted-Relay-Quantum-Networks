@@ -18,7 +18,7 @@ class Rr:
             topotable=Topo().Toporeducehop(g)
             path,path_sp=self.randompath(topotable,source,des)#返回找到的路径和安全概率
             if path==[]: #意味着没有足够的路径来保证安全概率
-                return [],[],0 #拒绝服务返回0
+                return [[[],[],0]] #拒绝服务返回0
             else:
                 self.path.append(path)
                 self.sp.append(path_sp)
@@ -26,7 +26,7 @@ class Rr:
             self.fsp=cur_sp
             #移除拓扑上的边
             Topo().TopoUpdate(g,path)
-        return self.path,self.sp,self.fsp
+        return [[self.path,self.sp,self.fsp]]
 
     def randompath(self,g,source,des):
         count=0
@@ -37,8 +37,8 @@ class Rr:
         pr=[]
         while curnode != des:
             count+=1
-            #if count>10000:
-                #return [],0
+            if count>10000:
+                return [],0
             dis=[]
             w=[]
             pr=[]
