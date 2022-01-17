@@ -27,6 +27,8 @@ class Alg1:
             self.fsp=cur_sp
             #移除拓扑上的边
             Topo().TopoUpdate(g,path)
+            if cur_sp==1:
+                return [[self.path,self.sp,self.fsp]]
         return [[self.path,self.sp,self.fsp]]
 
     def alg1n(self,topo,source,des,n):#找出n条路径
@@ -40,12 +42,17 @@ class Alg1:
             if path==[]: #意味着没有足够的路径来保证安全概率
                 return [[[],[],0]] #拒绝服务返回0
             else:
+                
                 self.path.append(path)
                 cur_path=len(self.path)
                 self.sp.append(path_sp)
+
             cur_sp=Sp().CalSumSecurityProbability(cur_sp,path_sp)
             self.fsp=cur_sp
+
             #移除拓扑上的边
             Topo().TopoUpdate(g,path)
+            if cur_sp==1:
+                return [[self.path,self.sp,self.fsp]]
         return [[self.path,self.sp,self.fsp]]
 

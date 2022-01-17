@@ -64,6 +64,7 @@ for i in range(count):
                 cost1[j]+=len(path)-1
         t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
         print(t2)
+        #去除分段的重复路径
         for z in t2:
             for path in z[0]:
                 cost2[j]+=len(path)-1
