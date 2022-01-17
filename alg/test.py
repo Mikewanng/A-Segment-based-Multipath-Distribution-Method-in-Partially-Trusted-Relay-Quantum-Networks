@@ -104,7 +104,7 @@ for j in range(len(sp1)):#平均
 
 
 for j in range(len(sth)):
-    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(count1[j])+'    '+str(cost1r[j])+'    '+str(cost1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(count2[j])+'    '+str(cost2r[j])+'    '+str(cost2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(countr[j])+'    '+str(costrr[j])+'    '+str(costr[j])+'\n')
+    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1r[j])+'    '+str(cost1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2r[j])+'    '+str(cost2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costrr[j])+'    '+str(costr[j])+'\n')
 
 fig = plt.figure()
 plt.plot(sth,sp1,color='red')
