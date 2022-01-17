@@ -1,10 +1,10 @@
-﻿#随机路由算法
+﻿#一般拓扑随机路由算法
 from Dijkstra import *
 from Sp import *
 from Topo import *
 import random
 
-class Rr:
+class Rr1:
     def __init__(self):
         self.path=[] #储存找到的路径
         self.sp=[] #储存路径安全概率
@@ -37,8 +37,8 @@ class Rr:
         pr=[]
         while curnode != des:
             count+=1
-            #if count>10000:
-                #return [],0
+            if count>10000:
+                return [],0
             dis=[]
             w=[]
             pr=[]
@@ -51,12 +51,7 @@ class Rr:
                     if tmppath!=[]:
                         dis.append([len(tmppath)-1,i[0]])
                 
-            #如果dis为空，那么意味着进入死胡同，如果还能找到其他路径,需要重随机
-            if dis==[]:
-                if Dijkstra().hopdijkstra(g,source,des)!=[]:
-                    return self.randompath(self,g,source,des)
-                else:
-                    return [],0
+            #如果dis为空，那么意味着进入死胡同，无法找到路径
             #降序
             dis=sorted(dis,key=lambda distance: distance[0],reverse = True)
             #计算权重
