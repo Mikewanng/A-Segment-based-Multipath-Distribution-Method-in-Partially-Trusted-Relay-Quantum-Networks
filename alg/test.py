@@ -95,9 +95,9 @@ for j in range(len(sp1)):#平均
     sp1[j]/=count
     sp2[j]/=count
     spr[j]/=count
-    count1[j]/=count
-    count2[j]/=count
-    countr[j]/=count
+    respondrate1=count1[j]/count
+    respondrate2=count2[j]/count
+    respondrater=countr[j]/count
     cost1[j]/=count
     cost2[j]/=count
     costr[j]/=count
