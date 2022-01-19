@@ -3,22 +3,23 @@ from Net import *
 from Alg1 import *
 from RandomRouting import *
 from Alg2 import *
+from Securitylevel import *
 import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 count=1000
 g=Net().network
-g1=Topo().CreatNodeEdgeSet(g,10,6,0)
+g1=Topo().CreatNodeEdgeSet(g,10,4,0)
 g2=Topo().CreatTopo(g1)
 source=random.randint(0,len(g2[0])-1)
 des=random.randint(0,len(g2[0])-1)
 while des==source:
     des=random.randint(0,len(g2[0])-1)
-sth=np.arange(0.5,1,0.1)
+sth=np.arange(0.5,1,0.05)
 filename='Sp_vs_sth'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
-fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume\n')
+fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr\n')
 #平均安全概率
 sp1=[0]*len(sth)
 sp2=[0]*len(sth)
@@ -44,7 +45,10 @@ costr=[0]*len(sth)
 cost1r=[0]*len(sth)
 cost2r=[0]*len(sth)
 costrr=[0]*len(sth)
-
+#密钥数量
+keynum1=[0]*len(sth)
+keynum2=[0]*len(sth)
+keynumr=[0]*len(sth)
 for i in range(count):
     print('count=',i)
     source=random.randint(0,len(g2[0])-1)
@@ -59,11 +63,15 @@ for i in range(count):
         if t1[0][2]>0:
             count1[j]+=1
             sp1[j]+=t1[0][2]
+            keynum1[j]+=1
         for z in t1:
             for path in z[0]:
                 cost1[j]+=len(path)-1
         t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
         print(t2)
+        #if t2!=t1:
+            #print('*********************************************************************************************\n')
+            #time.sleep(10)
         #去除分段的重复路径
         for z in t2:
             for path in z[0]:
@@ -74,6 +82,7 @@ for i in range(count):
         if t2[0][2]==0:
             tmp=0
         if tmp>0:
+            keynum2[j]+=Seclev().segsl(t2,sth[j])
             count2[j]+=1
             sp2[j]+=tmp
         tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
@@ -81,6 +90,7 @@ for i in range(count):
         if tr[0][2]>0:
             countr[j]+=1
             spr[j]+=tr[0][2]
+            keynumr[j]+=1
         for z in tr:
             for path in z[0]:
                 costr[j]+=len(path)-1
@@ -102,10 +112,13 @@ for j in range(len(sp1)):#平均
     cost1[j]/=count
     cost2[j]/=count
     costr[j]/=count
+    keynum1[j]/=count
+    keynum2[j]/=count
+    keynumr[j]/=count
 
 
 for j in range(len(sth)):
-    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1r[j])+'    '+str(cost1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2r[j])+'    '+str(cost2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costrr[j])+'    '+str(costr[j])+'\n')
+    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'\n')
 
 fig = plt.figure()
 plt.plot(sth,sp1,color='red')
@@ -151,4 +164,13 @@ plt.plot(sth,costrr,color='black')
 plt.title("res key consume")
 plt.xlabel('sth')
 plt.ylabel('consume')
+plt.show()
+
+fig = plt.figure()
+plt.plot(sth,keynum1,color='red')
+plt.plot(sth,keynum2,color='green')
+plt.plot(sth,keynumr,color='black')
+plt.title("final key number")
+plt.xlabel('sth')
+plt.ylabel('final key')
 plt.show()
