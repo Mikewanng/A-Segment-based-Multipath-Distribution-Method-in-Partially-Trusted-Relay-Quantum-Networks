@@ -1,4 +1,6 @@
-﻿from Topo import *
+﻿#随机可信中继，固定拓扑，随机请求
+
+from Topo import *
 from Net import *
 from Alg1 import *
 from RandomRouting import *
