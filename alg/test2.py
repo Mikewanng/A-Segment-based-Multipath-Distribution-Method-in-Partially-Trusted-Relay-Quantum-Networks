@@ -15,7 +15,7 @@ g1=Topo().CreatNodeEdgeSet(g,10,0,0)
 g2=Topo().CreatTopo(g1)
 
 
-trnum=np.arange(1,10,1)
+trnum=np.arange(1,11,1)
 sth=0.9
 filename='Sp_vs_trnum'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
@@ -144,9 +144,9 @@ plt.ylabel('Security probability')
 plt.show()
 
 fig = plt.figure()
-plt.plot(trnum,count1,color='red')
-plt.plot(trnum,count2,color='green')
-plt.plot(trnum,countr,color='black')
+plt.plot(trnum,respondrate1,color='red')
+plt.plot(trnum,respondrate2,color='green')
+plt.plot(trnum,respondrater,color='black')
 plt.title("request Response rate  ")
 plt.xlabel('trnum')
 plt.ylabel('Response rate')
