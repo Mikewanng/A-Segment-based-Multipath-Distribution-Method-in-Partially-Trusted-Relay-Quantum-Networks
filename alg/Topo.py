@@ -91,3 +91,41 @@ class Topo(object):#定义拓扑
 
 
 
+    def create_random_topology(nodes_num=50, a=0.3, b=3):##a = alpha, b = beta
+        nodes = []
+        edges = []
+        positions = []
+        edges_cost = []
+        topology = [[0 for i in range(110)] for j in range(110)]
+        distance = [[0 for i in range(nodes_num)] for j in range(nodes_num)]
+        for n in range(0, nodes_num):
+            x = random.randint(0, 100)
+            y = random.randint(0, 100)
+            while topology[x][y] == 1:
+                x = random.randint(0, 100)
+                y = random.randint(0, 100)
+            topology[x][y] = 1
+            nodes.append(f"N{n}")
+            positions.append([x, y])
+        i = 0
+        max_length = -1
+        while i < nodes_num:
+            j = i + 1
+            while j < nodes_num:
+                distance[i][j] = (abs(positions[i][0] - positions[j][0]) ** 2 + abs(
+                    positions[i][1] - positions[j][1])) ** 0.5
+                max_length = max(max_length, distance[i][j])
+                j += 1
+            i += 1
+        i = 0
+        while i < nodes_num:
+            j = i + 1
+            while j < nodes_num:
+                p = b * math.exp(-distance[i][j] / (max_length * a))  ##a = alpha, b = beta
+                if random.random() < p:
+                    edges_cost.append(round(distance[i][j], 1))
+                    edges.append((nodes[i], nodes[j]))
+                    edges.append((nodes[j], nodes[i]))
+                j += 1
+            i += 1
+        return [nodes, edges]
