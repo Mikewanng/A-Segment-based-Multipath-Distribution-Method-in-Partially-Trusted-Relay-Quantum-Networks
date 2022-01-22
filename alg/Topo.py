@@ -1,6 +1,6 @@
 from Link import *
 from Node import *
-import random
+import random,math
 import numpy as np
 class Topo(object):#定义拓扑
     def __init__(self):
@@ -91,7 +91,7 @@ class Topo(object):#定义拓扑
 
 
 
-    def create_random_topology(nodes_num=50, a=0.3, b=3):##a = alpha, b = beta
+    def create_random_topology(self,nodes_num=50, a=0.3, b=3):##a = alpha, b = beta
         nodes = []
         edges = []
         positions = []

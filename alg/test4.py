@@ -1,4 +1,4 @@
-﻿# 固定拓扑，固定SD对，可信中继增加。
+﻿# 随机拓扑，固定SD对，可信中继增加。
 from Topo import *
 from Net import *
 from Alg1 import *
@@ -9,13 +9,13 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-count=1000
-g=Net().network
+count=100
+g=Topo().create_random_topology(100,0.05,1)
 g1=Topo().CreatNodeEdgeSet(g,10,0,0)
 g2=Topo().CreatTopo(g1)
 
 
-trnum=np.arange(1,11,1)
+trnum=np.arange(1,20,1)
 sth=0.9
 filename='Sp_vs_trnum'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
@@ -56,9 +56,9 @@ for i in range(count):
     des=random.randint(0,len(g2[0])-1)
     while des==source:
         des=random.randint(0,len(g2[0])-1)
-    
+    g=Topo().create_random_topology(100,0.06,1)
     for j in range(len(trnum)):
-        g=Net().network
+        #g=Net().network
         g1=Topo().CreatNodeEdgeSet(g,10,trnum[j],0)
         g2=Topo().CreatTopo(g1)
         print(trnum[j])

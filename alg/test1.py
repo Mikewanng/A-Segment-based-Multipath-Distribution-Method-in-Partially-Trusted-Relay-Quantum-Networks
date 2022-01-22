@@ -10,7 +10,7 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-count=1000
+count=10
 g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,4,0)
 g2=Topo().CreatTopo(g1)
@@ -121,7 +121,7 @@ for j in range(len(sp1)):#平均
 
 for j in range(len(sth)):
     fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'\n')
-
+fp.close()
 fig = plt.figure()
 plt.plot(sth,sp1,color='red')
 plt.plot(sth,sp2,color='green')
