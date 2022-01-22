@@ -17,7 +17,7 @@ g2=Topo().CreatTopo(g1)
 
 trnum=np.arange(1,20,1)
 sth=0.9
-filename='Sp_vs_trnum'+str(count)+'time='+str(time.time())+'.txt'
+filename='randtopoSp_vs_trnum'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
 fp.write('trnum    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr\n')
 #平均安全概率

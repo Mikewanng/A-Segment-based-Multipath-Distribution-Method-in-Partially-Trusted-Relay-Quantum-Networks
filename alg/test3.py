@@ -1,4 +1,4 @@
-﻿#随机可信中继，固定拓扑，随机请求
+﻿#随机可信中继，随机拓扑，随机请求
 
 from Topo import *
 from Net import *
@@ -14,12 +14,9 @@ count=1000
 g=Topo().create_random_topology(100,0.05,1)
 g1=Topo().CreatNodeEdgeSet(g,10,8,0)
 g2=Topo().CreatTopo(g1)
-source=random.randint(0,len(g2[0])-1)
-des=random.randint(0,len(g2[0])-1)
-while des==source:
-    des=random.randint(0,len(g2[0])-1)
+
 sth=np.arange(0.5,1,0.05)
-filename='Sp_vs_sth'+str(count)+'time='+str(time.time())+'.txt'
+filename='randtopoSp_vs_sth'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
 fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr\n')
 #平均安全概率
