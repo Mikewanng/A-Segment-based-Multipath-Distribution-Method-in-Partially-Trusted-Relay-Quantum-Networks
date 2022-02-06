@@ -11,14 +11,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 count=1000
-g=Topo().create_random_topology(100,0.05,1)
-g1=Topo().CreatNodeEdgeSet(g,10,8,0)
-g2=Topo().CreatTopo(g1)
+
 
 sth=np.arange(0.5,1,0.05)
 filename='randtopoSp_vs_sth'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
-fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr\n')
+fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
 #平均安全概率
 sp1=[0]*len(sth)
 sp2=[0]*len(sth)
@@ -48,8 +46,15 @@ costrr=[0]*len(sth)
 keynum1=[0]*len(sth)
 keynum2=[0]*len(sth)
 keynumr=[0]*len(sth)
+#时间
+time1=[0]*len(sth)
+time2=[0]*len(sth)
+timer=[0]*len(sth)
 for i in range(count):
     print('count=',i)
+    g=Topo().create_random_topology(60,0.06,1)
+    g1=Topo().CreatNodeEdgeSet(g,10,6,0)
+    g2=Topo().CreatTopo(g1)
     source=random.randint(0,len(g2[0])-1)
     des=random.randint(0,len(g2[0])-1)
     print('source=',source,'des=',des)
@@ -57,7 +62,9 @@ for i in range(count):
         des=random.randint(0,len(g2[0])-1)
     for j in range(len(sth)):
         print(sth[j])
+        ts1=time.time()
         t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth[j])
+        time1[j]+=time.time()-ts1
         print(t1)
         if t1[0][2]>0:
             count1[j]+=1
@@ -66,7 +73,9 @@ for i in range(count):
         for z in t1:
             for path in z[0]:
                 cost1[j]+=len(path)-1
+        ts2=time.time()
         t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
+        time2[j]+=time.time()-ts2
         print(t2)
         #if t2!=t1:
             #print('*********************************************************************************************\n')
@@ -84,7 +93,9 @@ for i in range(count):
             keynum2[j]+=Seclev().segsl(t2,sth[j])
             count2[j]+=1
             sp2[j]+=tmp
+        tsr=time.time()
         tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
+        timer[j]+=time.time()-tsr
         print(tr)
         if tr[0][2]>0:
             countr[j]+=1
@@ -94,12 +105,16 @@ for i in range(count):
             for path in z[0]:
                 costr[j]+=len(path)-1
 for j in range(len(sp1)):#响应
-    sp1r[j]=sp1[j]/count1[j]
-    sp2r[j]=sp2[j]/count2[j]
-    sprr[j]=spr[j]/countr[j]
-    cost1r[j]=cost1[j]/count1[j]
-    cost2r[j]=cost2[j]/count2[j]
-    costrr[j]=costr[j]/countr[j]
+    if count1[j]>0:
+        sp1r[j]=sp1[j]/count1[j]
+        cost1r[j]=cost1[j]/count1[j]
+    if count2[j]>0:
+        sp2r[j]=sp2[j]/count2[j]
+        cost2r[j]=cost2[j]/count2[j]
+
+    if countr[j]>0:
+        sprr[j]=spr[j]/countr[j]
+        costrr[j]=costr[j]/countr[j]
 
 for j in range(len(sp1)):#平均
     sp1[j]/=count
@@ -114,12 +129,13 @@ for j in range(len(sp1)):#平均
     keynum1[j]/=count
     keynum2[j]/=count
     keynumr[j]/=count
+    time1[j]/=count
+    time2[j]/=count
+    timer[j]/=count
 
 
 for j in range(len(sth)):
-    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'\n')
-
-
+    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
 fp.close()
 fig = plt.figure()
 plt.plot(sth,sp1,color='red')
