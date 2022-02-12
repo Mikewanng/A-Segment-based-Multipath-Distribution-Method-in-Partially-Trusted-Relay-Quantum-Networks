@@ -181,9 +181,9 @@ keynum1=[0]*len(trnum)
 keynum2=[0]*len(trnum)
 keynumr=[0]*len(trnum)
 #时间
-time1=[0]*len(sth)
-time2=[0]*len(sth)
-timer=[0]*len(sth)
+time1=[0]*len(trnum)
+time2=[0]*len(trnum)
+timer=[0]*len(trnum)
 for i in range(count):
     print('count=',i)
     source=random.randint(0,len(g2[0])-1)
@@ -197,7 +197,7 @@ for i in range(count):
         g2=Topo().CreatTopo(g1)
         print(trnum[j])
         ts1=time.time()
-        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth[j])
+        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth)
         time1[j]+=time.time()-ts1
         print(t1)
         if t1[0][2]>0:
@@ -208,7 +208,7 @@ for i in range(count):
             for path in z[0]:
                 cost1[j]+=len(path)-1
         ts2=time.time()
-        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
+        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth)
         time2[j]+=time.time()-ts2
         print(t2)
         #if t2!=t1:
@@ -228,7 +228,7 @@ for i in range(count):
             count2[j]+=1
             sp2[j]+=tmp
         tsr=time.time()
-        tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
+        tr=Rr().rr(copy.deepcopy(g2),source,des,sth)
         timer[j]+=time.time()-tsr
         print(tr)
         if tr[0][2]>0:
@@ -269,8 +269,8 @@ for j in range(len(sp1)):#平均
     timer[j]/=count
 
 
-for j in range(len(sth)):
-    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
+for j in range(len(trnum)):
+    fp.write(str(trnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
 fp.close()
 
 
@@ -441,9 +441,9 @@ keynum1=[0]*len(trnum)
 keynum2=[0]*len(trnum)
 keynumr=[0]*len(trnum)
 #时间
-time1=[0]*len(sth)
-time2=[0]*len(sth)
-timer=[0]*len(sth)
+time1=[0]*len(trnum)
+time2=[0]*len(trnum)
+timer=[0]*len(trnum)
 for i in range(count):
     print('count=',i)
     source=random.randint(0,len(g2[0])-1)
@@ -457,7 +457,7 @@ for i in range(count):
         g2=Topo().CreatTopo(g1)
         print(trnum[j])
         ts1=time.time()
-        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth[j])
+        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth)
         time1[j]+=time.time()-ts1
         print(t1)
         if t1[0][2]>0:
@@ -468,7 +468,7 @@ for i in range(count):
             for path in z[0]:
                 cost1[j]+=len(path)-1
         ts2=time.time()
-        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
+        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth)
         time2[j]+=time.time()-ts2
         print(t2)
         #if t2!=t1:
@@ -488,7 +488,7 @@ for i in range(count):
             count2[j]+=1
             sp2[j]+=tmp
         tsr=time.time()
-        tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
+        tr=Rr().rr(copy.deepcopy(g2),source,des,sth)
         timer[j]+=time.time()-tsr
         print(tr)
         if tr[0][2]>0:
@@ -529,8 +529,8 @@ for j in range(len(sp1)):#平均
     timer[j]/=count
 
 
-for j in range(len(sth)):
-    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
+for j in range(len(trnum)):
+    fp.write(str(trnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
 fp.close()
 
 
@@ -543,38 +543,38 @@ fp = open(filename, 'w')
 fp.write('tnum    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
 
 #平均安全概率
-sp1=[0]*len(sth)
-sp2=[0]*len(sth)
-spr=[0]*len(sth)
+sp1=[0]*len(tnum)
+sp2=[0]*len(tnum)
+spr=[0]*len(tnum)
 #响应安全概率
-sp1r=[0]*len(sth)
-sp2r=[0]*len(sth)
-sprr=[0]*len(sth)
+sp1r=[0]*len(tnum)
+sp2r=[0]*len(tnum)
+sprr=[0]*len(tnum)
 #响应统计数
-count1=[0]*len(sth)
-count2=[0]*len(sth)
-countr=[0]*len(sth)
+count1=[0]*len(tnum)
+count2=[0]*len(tnum)
+countr=[0]*len(tnum)
 #响应率
-respondrate1=[0]*len(sth)
-respondrate2=[0]*len(sth)
-respondrater=[0]*len(sth)
+respondrate1=[0]*len(tnum)
+respondrate2=[0]*len(tnum)
+respondrater=[0]*len(tnum)
 
 #平均总消耗
-cost1=[0]*len(sth)
-cost2=[0]*len(sth)
-costr=[0]*len(sth)
+cost1=[0]*len(tnum)
+cost2=[0]*len(tnum)
+costr=[0]*len(tnum)
 #响应平均消耗
-cost1r=[0]*len(sth)
-cost2r=[0]*len(sth)
-costrr=[0]*len(sth)
+cost1r=[0]*len(tnum)
+cost2r=[0]*len(tnum)
+costrr=[0]*len(tnum)
 #密钥数量
-keynum1=[0]*len(sth)
-keynum2=[0]*len(sth)
-keynumr=[0]*len(sth)
+keynum1=[0]*len(tnum)
+keynum2=[0]*len(tnum)
+keynumr=[0]*len(tnum)
 #时间
-time1=[0]*len(sth)
-time2=[0]*len(sth)
-timer=[0]*len(sth)
+time1=[0]*len(tnum)
+time2=[0]*len(tnum)
+timer=[0]*len(tnum)
 for i in range(count):
     print('count=',i)
     
@@ -589,7 +589,7 @@ for i in range(count):
             des=random.randint(0,len(g2[0])-1)
         print(tnum[j])
         ts1=time.time()
-        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth[j])
+        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth)
         time1[j]+=time.time()-ts1
         print(t1)
         if t1[0][2]>0:
@@ -600,7 +600,7 @@ for i in range(count):
             for path in z[0]:
                 cost1[j]+=len(path)-1
         ts2=time.time()
-        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
+        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth)
         time2[j]+=time.time()-ts2
         print(t2)
         #if t2!=t1:
@@ -616,11 +616,11 @@ for i in range(count):
         if t2[0][2]==0:
             tmp=0
         if tmp>0:
-            keynum2[j]+=Seclev().segsl(t2,sth[j])
+            keynum2[j]+=Seclev().segsl(t2,sth)
             count2[j]+=1
             sp2[j]+=tmp
         tsr=time.time()
-        tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
+        tr=Rr().rr(copy.deepcopy(g2),source,des,sth)
         timer[j]+=time.time()-tsr
         print(tr)
         if tr[0][2]>0:
@@ -661,7 +661,7 @@ for j in range(len(sp1)):#平均
     timer[j]/=count
 
 
-for j in range(len(sth)):
-    fp.write(str(sth[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
+for j in range(len(tnum)):
+    fp.write(str(tnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
 fp.close()
 
