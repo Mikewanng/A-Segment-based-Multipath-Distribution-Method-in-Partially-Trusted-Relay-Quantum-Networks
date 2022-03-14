@@ -2,6 +2,7 @@ from Link import *
 from Node import *
 import random,math
 import numpy as np
+import networkx as nx
 class Topo(object):#定义拓扑
     def __init__(self):
         self.node=[]
@@ -91,11 +92,12 @@ class Topo(object):#定义拓扑
 
 
 
-    def create_random_topology(self,nodes_num=50, a=0.3, b=3):##a = alpha, b = beta
+    def create_random_topology(self,nodes_num=50, a=0.3, b=3,flag=0):##a = alpha, b = beta
         nodes = []
         edges = []
         positions = []
         edges_cost = []
+        degree=[0]*nodes_num
         topology = [[0 for i in range(110)] for j in range(110)]
         distance = [[0 for i in range(nodes_num)] for j in range(nodes_num)]
         for n in range(0, nodes_num):
@@ -121,11 +123,37 @@ class Topo(object):#定义拓扑
         while i < nodes_num:
             j = i + 1
             while j < nodes_num:
-                p = b * math.exp(-distance[i][j] / (max_length * a))  ##a = alpha, b = beta
+                p =5* b * math.exp(-distance[i][j] / (max_length * a))/nodes_num  ##a = alpha, b = beta
                 if random.random() < p:
                     edges_cost.append(round(distance[i][j], 1))
+                    degree[i]+=1
+                    degree[j]+=1
                     edges.append((nodes[i], nodes[j]))
                     edges.append((nodes[j], nodes[i]))
                 j += 1
             i += 1
+        for i in range(nodes_num):
+            if degree[i]<2:
+                while degree[i]<2:
+                    j=random.randint(0,nodes_num-1)
+                    while i==j:
+                        j=random.randint(0,nodes_num-1)
+                    p =4* b * math.exp(-distance[i][j] / (max_length * a))/nodes_num  ##a = alpha, b = beta
+                    if random.random() < p:
+                        edges_cost.append(round(distance[i][j], 1))
+                        degree[i]+=1
+                        degree[j]+=1
+                        edges.append((nodes[i], nodes[j]))
+                        edges.append((nodes[j], nodes[i]))
+
+            if flag==1:
+                g = nx.Graph()  # create graph
+                g.add_nodes_from(nodes)  # add nodes
+                g.add_edges_from(edges)  # add edges
+                nodes_position = dict(zip(nodes, positions))  #
+                node_labels = dict(zip(nodes, nodes))  # label of nodes
+                edge_labels = dict(zip(edges, edges_cost))  # label of edges
+                nx.draw_networkx_nodes(g, nodes_position, node_size=100, node_color="#6CB6FF")  # draw nodes
+                nx.draw_networkx_edges(g, nodes_position, edges)  # draw edges
+                nx.draw_networkx_labels(g, nodes_position, node_labels)  # draw label of nodes
         return [nodes, edges]

@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
-count=1000
+count=200
+
+"""
 g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,4,0)
 g2=Topo().CreatTopo(g1)
@@ -150,7 +152,7 @@ trnum=np.arange(1,11,1)
 sth=0.9
 filename='Sp_vs_trnum'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
-fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
+fp.write('trnum    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
 #平均安全概率
 sp1=[0]*len(trnum)
 sp2=[0]*len(trnum)
@@ -410,7 +412,7 @@ trnum=np.arange(1,11,1)
 sth=0.9
 filename='randtopoSp_vs_trnum'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
-fp.write('sth    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
+fp.write('trnum     avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
 #平均安全概率
 sp1=[0]*len(trnum)
 sp2=[0]*len(trnum)
@@ -533,10 +535,12 @@ for j in range(len(trnum)):
     fp.write(str(trnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
 fp.close()
 
-
+"""
 #算法时间规模
 
 
+count=100
+sth=0.9
 tnum=np.arange(50,500,50)
 filename='randtopotime_vs_tnum'+str(count)+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
@@ -579,8 +583,8 @@ for i in range(count):
     print('count=',i)
     
     for j in range(len(tnum)):
-        g=Topo().create_random_topology(tnum[j],0.06,1)
-        g1=Topo().CreatNodeEdgeSet(g,10,tnum[j]/10,0)
+        g=Topo().create_random_topology(tnum[j],0.05,1)
+        g1=Topo().CreatNodeEdgeSet(g,10,5,0)
         g2=Topo().CreatTopo(g1)
         source=random.randint(0,len(g2[0])-1)
         des=random.randint(0,len(g2[0])-1)
@@ -642,6 +646,9 @@ for j in range(len(sp1)):#响应
     if countr[j]>0:
         sprr[j]=spr[j]/countr[j]
         costrr[j]=costr[j]/countr[j]
+    time1[j]/=count1[j]
+    time2[j]/=count2[j]
+    timer[j]/=countr[j]
 
 for j in range(len(sp1)):#平均
     sp1[j]/=count
@@ -656,12 +663,9 @@ for j in range(len(sp1)):#平均
     keynum1[j]/=count
     keynum2[j]/=count
     keynumr[j]/=count
-    time1[j]/=count
-    time2[j]/=count
-    timer[j]/=count
+    
 
 
 for j in range(len(tnum)):
     fp.write(str(tnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
 fp.close()
-
