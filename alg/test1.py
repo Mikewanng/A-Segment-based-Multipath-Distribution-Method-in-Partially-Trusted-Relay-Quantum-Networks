@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 count=1000
+
 g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,4,0)
 g2=Topo().CreatTopo(g1)
@@ -34,6 +35,7 @@ sprr=[0]*len(sth)
 count1=[0]*len(sth)
 count2=[0]*len(sth)
 countr=[0]*len(sth)
+countk=[0]*len(sth)
 #响应率
 respondrate1=[0]*len(sth)
 respondrate2=[0]*len(sth)
@@ -55,8 +57,11 @@ keynumr=[0]*len(sth)
 time1=[0]*len(sth)
 time2=[0]*len(sth)
 timer=[0]*len(sth)
-for i in range(count):
-    print('count=',i)
+
+f=0
+
+while f==0:
+    
     source=random.randint(0,len(g2[0])-1)
     des=random.randint(0,len(g2[0])-1)
     print('source=',source,'des=',des)
@@ -66,46 +71,60 @@ for i in range(count):
         print(sth[j])
         ts1=time.time()
         t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth[j])
-        time1[j]+=time.time()-ts1
-        print(t1)
-        if t1[0][2]>0:
-            count1[j]+=1
-            sp1[j]+=t1[0][2]
-            keynum1[j]+=1
-        for z in t1:
-            for path in z[0]:
-                cost1[j]+=len(path)-1
+        t21=time.time()
+        
         ts2=time.time()
         t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
-        time2[j]+=time.time()-ts2
-        print(t2)
-        #if t2!=t1:
-            #print('*********************************************************************************************\n')
-            #time.sleep(10)
-        #去除分段的重复路径
-        for z in t2:
-            for path in z[0]:
-                cost2[j]+=len(path)-1
-        tmp=1
-        for p in t2:
-            tmp*=p[2]
-        if t2[0][2]==0:
-            tmp=0
-        if tmp>0:
-            keynum2[j]+=Seclev().segsl(t2,sth[j])
-            count2[j]+=1
-            sp2[j]+=tmp
+        t22=time.time()
+        if t1==t2:
+            continue
+        
         tsr=time.time()
         tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
-        timer[j]+=time.time()-tsr
-        print(tr)
-        if tr[0][2]>0:
-            countr[j]+=1
-            spr[j]+=tr[0][2]
-            keynumr[j]+=1
-        for z in tr:
-            for path in z[0]:
-                costr[j]+=len(path)-1
+        t2r=time.time()
+        
+
+        if t1!=t2:
+            countk[j]+=1
+            #alg1
+            time1[j]+=t21-ts1
+            print(t1)
+            if t1[0][2]>0:
+                count1[j]+=1
+                sp1[j]+=t1[0][2]
+                keynum1[j]+=1
+            for z in t1:
+                for path in z[0]:
+                    cost1[j]+=len(path)-1
+            #alg2
+            print(t2)
+            time2[j]+=t22-ts2
+            #去除分段的重复路径
+            for z in t2:
+                for path in z[0]:
+                    cost2[j]+=len(path)-1
+            tmp=1
+            for p in t2:
+                tmp*=p[2]
+            if t2[0][2]==0:
+                tmp=0
+            if tmp>0:
+                keynum2[j]+=Seclev().segsl(t2,sth[j])
+                count2[j]+=1
+                sp2[j]+=tmp
+            #rr
+            timer[j]+=t2r-tsr
+            print(tr)
+            if tr[0][2]>0:
+                countr[j]+=1
+                spr[j]+=tr[0][2]
+                keynumr[j]+=1
+            for z in tr:
+                for path in z[0]:
+                    costr[j]+=len(path)-1
+        for i in countk:
+            if i>count:
+                f=1
 for j in range(len(sp1)):#响应
     if count1[j]>0:
         sp1r[j]=sp1[j]/count1[j]

@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
-count=100
+count=1000
 
 
 sth=np.arange(0.5,1,0.05)
@@ -53,8 +53,8 @@ time2=[0]*len(sth)
 timer=[0]*len(sth)
 for i in range(count):
     print('count=',i)
-    g=Topo().create_random_topology(60,0.05,0.5)
-    g1=Topo().CreatNodeEdgeSet(g,10,0,0)
+    g=Topo().create_random_topology(60,0.04,1)
+    g1=Topo().CreatNodeEdgeSet(g,10,5,0)
     g2=Topo().CreatTopo(g1)
     source=random.randint(0,len(g2[0])-1)
     des=random.randint(0,len(g2[0])-1)
