@@ -32,7 +32,7 @@ class Topo(object):#定义拓扑
             self.topo[0][dictnode.get(edge.fr)][dictnode.get(edge.to)]=Link(dictnode.get(edge.fr),dictnode.get(edge.to),edge.c)
             
         return self.topo
-    def CreatNodeEdgeSet(self,basic_node_edge_set,c=1000,TrustednodeNum=4,option=0 ):#option=0默认为单向边
+    def CreatNodeEdgeSet(self,basic_node_edge_set,c=1000,TrustednodeNum=4,nodesp=0.9,option=0 ):#option=0默认为单向边
         newedge=[] #存储Link结构的边
         newnode=[] #存储节点以及节点安全概率
         
@@ -46,7 +46,7 @@ class Topo(object):#定义拓扑
         NodeSecurityProbability=[] #节点安全概率
         for i in range(len(basic_node_edge_set[0])):
             if i not in TrustedNode:
-                NodeSecurityProbability.append(0.9)
+                NodeSecurityProbability.append(nodesp)
             else:
                 NodeSecurityProbability.append(1)
 
@@ -90,6 +90,10 @@ class Topo(object):#定义拓扑
             tmptopo.append(t)
         return [tmptopo,g[1]]
 
+    def Changenodesp(self,topo,v):
+        for i in range(len(topo[1])):
+            if topo[1][i]!=1:
+                topo[1][i]=v
 
 
     def create_random_topology(self,nodes_num=50, a=0.3, b=3,flag=0):##a = alpha, b = beta
