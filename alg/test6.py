@@ -10,7 +10,7 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-valuecount=500
+runcount=10
 
 g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,4,0.9,0)
@@ -22,7 +22,7 @@ for th in sth:
     count=0 #总运行次数
     filename='Sp_vs_trnum'+str(th)+'time='+str(time.time())+'.txt'
     fp = open(filename, 'w')
-    fp.write('trnum    avesecurityprobability1    ressecurityprobability    respond_rate    avekeyconsume    reskeyconsume    keynum    time1    avesecurityprobability2    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynum2    time2    avesecurityprobabilityr    ressecurityprobability    respond_rate    avekeyconsume    requestkeyconsume    keynumr    timer\n')
+    fp.write('nodesp    asp1    rsp1    gsp1    rr1    rrg1    acost1    rcost1    keyn1    time1    asp2    rsp2    gsp2    rr2    rrg2   acost2    rcost2    keyn2    time2    aspr    rspr    gspr    rrr    rrgr   acostr   rcostr   keynr    timer\n')
     #平均安全概率
     sp1=[0]*len(trnum)
     sp2=[0]*len(trnum)
@@ -31,15 +31,24 @@ for th in sth:
     sp1r=[0]*len(trnum)
     sp2r=[0]*len(trnum)
     sprr=[0]*len(trnum)
+     #筛选安全概率：alg2满足的次数
+    sp1g=[0]*len(trnum)
+    sp2g=[0]*len(trnum)
+    sprg=[0]*len(trnum)
     #响应统计数
     count1=[0]*len(trnum)
     count2=[0]*len(trnum)
     countr=[0]*len(trnum)
     countk=[0]*len(trnum)
     #响应率
-    respondrate1=[0]*len(trnum)
-    respondrate2=[0]*len(trnum)
-    respondrater=[0]*len(trnum)
+    rr1=[0]*len(trnum)
+    rr2=[0]*len(trnum)
+    rrr=[0]*len(trnum)
+    #对比响应率除以alg2满足的最大次数
+    rr1g=[0]*len(trnum)
+    rr2g=[0]*len(trnum)
+    rrrg=[0]*len(trnum)
+
 
     #平均总消耗
     cost1=[0]*len(trnum)
@@ -49,6 +58,10 @@ for th in sth:
     cost1r=[0]*len(trnum)
     cost2r=[0]*len(trnum)
     costrr=[0]*len(trnum)
+    #筛选平均消耗/alg2满足的次数
+    cost1g=[0]*len(trnum)
+    cost2g=[0]*len(trnum)
+    costrg=[0]*len(trnum)
     #密钥数量
     keynum1=[0]*len(trnum)
     keynum2=[0]*len(trnum)
@@ -60,9 +73,10 @@ for th in sth:
     #循环次数
     f=0
     while f==0:
-        """count+=1
-        if count>valuecount:
-            break"""
+        count+=1
+        print(count)
+        if count>runcount:
+            break
         source=random.randint(0,len(g2[0])-1)
         des=random.randint(0,len(g2[0])-1)
         while des==source:
@@ -77,10 +91,10 @@ for th in sth:
         
             t1=Alg1().alg1(copy.deepcopy(g2),source,des,th)
             t2=Alg2().alg2(copy.deepcopy(g2),source,des,th)
-            if t1==t2:
-                continue
+            #if t1==t2:
+                #continue
             tr=Rr().rr(copy.deepcopy(g2),source,des,th)
-            countk[j]+=1
+            
             #alg1
             
             print(t1)
@@ -117,10 +131,10 @@ for th in sth:
             for z in tr:
                 for path in z[0]:
                     costr[j]+=len(path)-1
-            f=1
-            for i in countk:
-                if i<valuecount:
-                    f=0
+            if t1!=t2:
+                sp1g[j]+=t1[0][2]
+                sp2g[j]+=tmp
+                sprg[j]+=tr[0][2]
 
 
     for j in range(len(trnum)):#响应
@@ -134,27 +148,47 @@ for th in sth:
         if countr[j]>0:
             sprr[j]=spr[j]/countr[j]
             costrr[j]=costr[j]/countr[j]
+    #找出count2最大值作为除数
+    max=0
+    for i in count2:
+        if i>max:
+            max=i
+    for j in range(len(trnum)):#筛选
+        
 
+        if max>0:
+            sp1g[j]=sp1g[j]/max
+            sp2g[j]=sp2g[j]/max
+            sprg[j]=sprg[j]/max
+            rr1g[j]=count1[j]/max
+            rr2g[j]=count2[j]/max
+            rrrg[j]=countr[j]/max
     for j in range(len(trnum)):#平均
-        sp1[j]/=countk[j]
-        sp2[j]/=countk[j]
-        spr[j]/=countk[j]
-        respondrate1[j]=count1[j]/countk[j]
-        respondrate2[j]=count2[j]/countk[j]
-        respondrater[j]=countr[j]/countk[j]
-        cost1[j]/=countk[j]
-        cost2[j]/=countk[j]
-        costr[j]/=countk[j]
-        keynum1[j]/=countk[j]
-        keynum2[j]/=countk[j]
-        keynumr[j]/=countk[j]
+        sp1[j]/=runcount
+        sp2[j]/=runcount
+        spr[j]/=runcount
+        rr1[j]=count1[j]/runcount
+        rr2[j]=count2[j]/runcount
+        rrr[j]=countr[j]/runcount
+        cost1[j]/=runcount
+        cost2[j]/=runcount
+        costr[j]/=runcount
+        keynum1[j]/=runcount
+        keynum2[j]/=runcount
+        keynumr[j]/=runcount
+        time1[j]/=runcount
+        time2[j]/=runcount
+        timer[j]/=runcount
         
 
 
     for j in range(len(trnum)):
-        fp.write(str(trnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(respondrate1[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(respondrate2[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(respondrater[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
+        fp.write(str(trnum[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(sp1g[j])+'    '+str(rr1[j])+'    '+str(rr1g[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(sp2g[j])+'    '+str(rr2[j])+'    '+str(rr2g[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(sprg[j])+'    '+str(rrr[j])+'    '+str(rrrg[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
+    for j in count2:
+        fp.write(str(j))
+    fp.write('\n')
     fp.close()
-    
+    """
     fig = plt.figure()
     plt.plot(trnum,sp1,color='red')
     plt.plot(trnum,sp2,color='green')
@@ -209,4 +243,4 @@ for th in sth:
     plt.xlabel('trnum')
     plt.ylabel('final key')
     plt.show()
-    
+    """

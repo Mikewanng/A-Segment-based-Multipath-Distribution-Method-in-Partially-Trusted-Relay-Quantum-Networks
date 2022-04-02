@@ -14,6 +14,8 @@ class Alg2:
         #如果alg1能够满足那么确定路径数量
         if fsp>=sth:
             path_num=len(tmp[0][0])
+            if path_num==1:#不需要分段
+                return tmp
             return self.alg2n(copy.deepcopy(topo),source,des,path_num)
             
         else:#算法1不能满足，那么依次递增路径数量直到满足sth
