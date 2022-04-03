@@ -10,7 +10,7 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-runcount=10
+runcount=1000
 
 g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,6,0.9,0)
@@ -40,6 +40,10 @@ for th in sth:
     count2=[0]*len(nodespset)
     countr=[0]*len(nodespset)
     countk=[0]*len(nodespset)
+    #响应统计数优势
+    count1g=[0]*len(nodespset)
+    count2g=[0]*len(nodespset)
+    countrg=[0]*len(nodespset)
     #响应率
     rr1=[0]*len(nodespset)
     rr2=[0]*len(nodespset)
@@ -132,7 +136,14 @@ for th in sth:
             for z in tr:
                 for path in z[0]:
                     costr[j]+=len(path)-1
-            if t1!=t2:
+            if t1!=t2 or t2[0][2]==0:
+                countk[j]+=1
+                if t1[0][2]>0:
+                    count1g[j]+=1
+                if tmp>0:
+                    count2g[j]+=1
+                if tr[0][2]>0:
+                    countr[j]+=1
                 sp1g[j]+=t1[0][2]
                 sp2g[j]+=tmp
                 sprg[j]+=tr[0][2]
@@ -152,7 +163,7 @@ for th in sth:
             costrr[j]=costr[j]/countr[j]
     #找出count2最大值作为除数
     max=0
-    for i in count2:
+    for i in count2g:
         if i>max:
             max=i
     for j in range(len(nodespset)):#筛选
@@ -186,8 +197,21 @@ for th in sth:
 
     for j in range(len(nodespset)):
         fp.write(str(nodespset[j])+'    '+str(sp1[j])+'    '+str(sp1r[j])+'    '+str(sp1g[j])+'    '+str(rr1[j])+'    '+str(rr1g[j])+'    '+str(cost1[j])+'    '+str(cost1r[j])+'    '+str(keynum1[j])+'    '+str(time1[j])+'    '+str(sp2[j])+'    '+str(sp2r[j])+'    '+str(sp2g[j])+'    '+str(rr2[j])+'    '+str(rr2g[j])+'    '+str(cost2[j])+'    '+str(cost2r[j])+'    '+str(keynum2[j])+'    '+str(time2[j])+'    '+str(spr[j])+'    '+str(sprr[j])+'    '+str(sprg[j])+'    '+str(rrr[j])+'    '+str(rrrg[j])+'    '+str(costr[j])+'    '+str(costrr[j])+'    '+str(keynumr[j])+'    '+str(timer[j])+'\n')
-    for j in count2:
-        fp.write(str(j))
+    fp.write('countk')
+    for j in countk:
+        fp.write(str(j)+'    ')
+    fp.write('\n')
+    fp.write('count1g')
+    for j in count1g:
+        fp.write(str(j)+'    ')
+    fp.write('\n')
+    fp.write('count2g')
+    for j in count2g:
+        fp.write(str(j)+'    ')
+    fp.write('\n')
+    fp.write('countrg')
+    for j in countrg:
+        fp.write(str(j)+'    ')
     fp.write('\n')
     fp.close()
     '''
