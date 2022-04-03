@@ -143,7 +143,7 @@ for th in sth:
                 if tmp>0:
                     count2g[j]+=1
                 if tr[0][2]>0:
-                    countr[j]+=1
+                    countrg[j]+=1
                 sp1g[j]+=t1[0][2]
                 sp2g[j]+=tmp
                 sprg[j]+=tr[0][2]
@@ -162,20 +162,17 @@ for th in sth:
             sprr[j]=spr[j]/countr[j]
             costrr[j]=costr[j]/countr[j]
     #找出count2最大值作为除数
-    max=0
-    for i in count2g:
-        if i>max:
-            max=i
+  
     for j in range(len(nodespset)):#筛选
         
 
-        if max>0:
-            sp1g[j]=sp1g[j]/max
-            sp2g[j]=sp2g[j]/max
-            sprg[j]=sprg[j]/max
-            rr1g[j]=count1[j]/max
-            rr2g[j]=count2[j]/max
-            rrrg[j]=countr[j]/max
+        
+        sp1g[j]=sp1g[j]/countk[j]
+        sp2g[j]=sp2g[j]/countk[j]
+        sprg[j]=sprg[j]/countk[j]
+        rr1g[j]=count1[j]/countk[j]
+        rr2g[j]=count2[j]/countk[j]
+        rrrg[j]=countr[j]/countk[j]
 
     for j in range(len(nodespset)):#绝对平均
         sp1[j]/=runcount
