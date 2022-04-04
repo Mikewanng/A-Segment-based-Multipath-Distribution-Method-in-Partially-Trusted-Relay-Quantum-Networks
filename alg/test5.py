@@ -10,7 +10,7 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-runcount=1000
+runcount=5000
 
 g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,6,0.9,0)
@@ -85,8 +85,10 @@ for th in sth:
         g1=Topo().CreatNodeEdgeSet(g,10,4,0.9,0)
         g2=Topo().CreatTopo(g1)
         source=random.randint(0,len(g2[0])-1)
+        while g2[1][source]==1:
+            source=random.randint(0,len(g2[0])-1)
         des=random.randint(0,len(g2[0])-1)
-        while des==source:
+        while des==source or g2[1][des]==1:
             des=random.randint(0,len(g2[0])-1)
     
         print(source,des)    
@@ -170,9 +172,9 @@ for th in sth:
         sp1g[j]=sp1g[j]/countk[j]
         sp2g[j]=sp2g[j]/countk[j]
         sprg[j]=sprg[j]/countk[j]
-        rr1g[j]=count1[j]/countk[j]
-        rr2g[j]=count2[j]/countk[j]
-        rrrg[j]=countr[j]/countk[j]
+        rr1g[j]=count1g[j]/countk[j]
+        rr2g[j]=count2g[j]/countk[j]
+        rrrg[j]=countrg[j]/countk[j]
 
     for j in range(len(nodespset)):#绝对平均
         sp1[j]/=runcount
