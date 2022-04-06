@@ -25,7 +25,7 @@ class Rr:
             cur_sp=Sp().CalSumSecurityProbability(cur_sp,path_sp)
             self.fsp=cur_sp
             #移除拓扑上的边
-            Topo().TopoUpdate(g,path)
+            Topo().TopoUpdater(g,path)
         return [[self.path,self.sp,self.fsp]]
 
     def randompath(self,g,source,des):

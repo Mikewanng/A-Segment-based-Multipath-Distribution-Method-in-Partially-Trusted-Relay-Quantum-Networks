@@ -19,7 +19,7 @@ class Alg2:
             return self.alg2n(copy.deepcopy(topo),source,des,path_num)
             
         else:#算法1不能满足，那么依次递增路径数量直到满足sth
-            for n in range(1,100):
+            for n in range(2,100):
                 t=self.alg2n(copy.deepcopy(topo),source,des,n)
                 #判断返回路径是否为空
                 for i in t:

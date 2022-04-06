@@ -81,6 +81,15 @@ class Topo(object):#定义拓扑
             count+=1
         return a
 
+                        g[0][j][i].dellink()
+    def TopoUpdater(self,g,path):#删去路径上的 对比算法。
+        nodelist=path[1:-1]
+        for i in range(len(g[0])):
+            for j in range(len(g[0][i])):
+                if i in  nodelist or j in nodelist:
+                    if g[0][i][j].Is_connected==True:
+                        g[0][i][j].dellink()
+                        g[0][j][i].dellink()
     def Toporeduce(self,g):#将邻接矩阵化为邻接表
         tmptopo=[]
         for i in g[0]:
