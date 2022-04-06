@@ -68,7 +68,18 @@ class Topo(object):#定义拓扑
                     if g[1][j]<1 and g[0][i][j].Is_connected==True:
                         g[0][i][j].dellink()
         
-        
+    def creattr(self,a,n,sd):
+        count=0
+        for i in a:
+            if i==1:
+                count+=1
+        while count<n:
+            t=random.randint(0,38)
+            while a[t]==1 or t in sd:
+                t=random.randint(0,38)
+            a[t]=1
+            count+=1
+        return a
 
     def Toporeduce(self,g):#将邻接矩阵化为邻接表
         tmptopo=[]
