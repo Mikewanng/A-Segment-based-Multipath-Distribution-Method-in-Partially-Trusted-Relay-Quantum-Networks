@@ -76,3 +76,80 @@ class Alg2:
             return t
         
 
+    def alg2maxs(self,topo,source,des,sth=1):#找到最大安全性的路径
+        t=[]
+        curnode=source
+        #找出当前最近中继距离sd
+        #minrelay=self.findminrelay(topo,source,des)
+        while curnode!=des:
+            minrelay=self.findminrelay(topo,source,des)
+            nseg=Alg1().alg1maxs(copy.deepcopy(topo),curnode,des)
+            if minrelay==-1:
+                t.append(nseg)
+                break
+            seg1=Alg1().alg1maxs(topo,curnode,minrelay)
+            tmptopo=copy.deepcopy(topo)
+            seg2=Alg1().alg1maxs(tmptopo,minrelay,des)
+
+            #判断分段
+            if seg1[0][2]*seg2[0][2]>nseg[0][2]:
+                curnode=minrelay
+                t+=seg1
+            else:
+                t+=nseg
+                break
+        return t
+
+
+            
+            
+            
+            
+            
+            
+            #先调用alg1找出普通多路径的数量
+        tmp=Alg1().alg1maxs(copy.deepcopy(topo),source,des)
+        fsp=tmp[0][2]
+        #如果alg1能够满足那么确定路径数量
+        if fsp>=sth:
+            path_num=len(tmp[0][0])
+            if path_num==1:#不需要分段
+                return tmp
+            return self.alg2n(copy.deepcopy(topo),source,des,path_num)
+            
+        else:#算法1不能满足，那么依次递增路径数量直到满足sth
+            for n in range(2,100):
+                t=self.alg2n(copy.deepcopy(topo),source,des,n)
+                #判断返回路径是否为空
+                for i in t:
+                    if i[0]==[]:#无法找到足够路径数量
+                        return [[[],[],0]]
+                #判断能否满足安全性需求
+                sp=Sp().segsp(t)
+                if sp>=sth:
+                    
+                    return t
+    def findminrelay(self,topo,source,des):#找出最近relay
+        sumlen=1000000
+        #找出最近的可信点且距离起点更近
+        relaynode=sys.maxsize
+        topotable=Topo().Toporeducehop(topo)
+        for i in range(len(topo[0])):
+            if topo[1][i]==1 and i!=source and i!=des:#是可信节点
+                path1=Dijkstra().hopdijkstra(topotable,source,i)
+                if path1!=[]:
+                    len1=len(path1)-1
+                else:
+                    continue
+                path2=Dijkstra().hopdijkstra(topotable,i,des)
+                if path1!=[]:
+                    len2=len(path2)-1
+                else:
+                    continue
+
+                if len1+len2<sumlen:
+                    sumlen=len1+len2
+                    relaynode=i
+        if relaynode==sys.maxsize:
+            return -1
+        return relaynode

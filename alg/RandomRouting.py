@@ -27,7 +27,23 @@ class Rr:
             #移除拓扑上的边
             Topo().TopoUpdater(g,path)
         return [[self.path,self.sp,self.fsp]]
-
+    def rrmaxs(self,topo,source,des,sth=1):#找到最大安全性
+        g=topo
+        cur_sp=0
+        while cur_sp<sth:
+            #转为邻接表
+            topotable=Topo().Toporeducehop(g)
+            path,path_sp=self.randompath(topotable,source,des)#返回找到的路径和安全概率
+            if path==[]: #意味着没有路径了
+                return [[self.path,self.sp,self.fsp]] 
+            else:
+                self.path.append(path)
+                self.sp.append(path_sp)
+            cur_sp=Sp().CalSumSecurityProbability(cur_sp,path_sp)
+            self.fsp=cur_sp
+            #移除拓扑上的边
+            Topo().TopoUpdater(g,path)
+        return [[self.path,self.sp,self.fsp]]
     def randompath(self,g,source,des):
         count=0
         path=[source]

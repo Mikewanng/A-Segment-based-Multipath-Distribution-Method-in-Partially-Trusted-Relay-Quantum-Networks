@@ -23,7 +23,7 @@ for th in sth:
     filename='Sp_vs_nodesp'+str(th)+'time='+str(time.time())+'.txt'
     fp = open(filename, 'w')
     fp.write('nodesp    asp1    rsp1    gsp1    rr1    rrg1    acost1    rcost1    keyn1    time1    asp2    rsp2    gsp2    rr2    rrg2   acost2    rcost2    keyn2    time2    aspr    rspr    gspr    rrr    rrgr   acostr   rcostr   keynr    timer\n')
-    #平均安全概率总运行次数
+    #平均安全概率/总运行次数
     sp1=[0]*len(nodespset)
     sp2=[0]*len(nodespset)
     spr=[0]*len(nodespset)
@@ -31,11 +31,11 @@ for th in sth:
     tsp1=[0]*len(nodespset)
     tsp2=[0]*len(nodespset)
     tspr=[0]*len(nodespset)
-    #响应安全概率满足请求的运行次数
+    #响应安全概率满足请求的运行次数/只计算满足请求的
     sp1r=[0]*len(nodespset)
     sp2r=[0]*len(nodespset)
     sprr=[0]*len(nodespset)
-    #筛选安全概率：alg2满足的次数
+    #筛选安全概率：alg2满足的次数/筛选出的次数
     sp1g=[0]*len(nodespset)
     sp2g=[0]*len(nodespset)
     sprg=[0]*len(nodespset)
@@ -52,11 +52,11 @@ for th in sth:
     count1g=[0]*len(nodespset)
     count2g=[0]*len(nodespset)
     countrg=[0]*len(nodespset)
-    #响应率
+    #响应率/总运行次数
     rr1=[0]*len(nodespset)
     rr2=[0]*len(nodespset)
     rrr=[0]*len(nodespset)
-    #对比响应率除以alg2满足的最大次数
+    #对比响应率除以alg2满足的最大次数/筛选的次数
     rr1g=[0]*len(nodespset)
     rr2g=[0]*len(nodespset)
     rrrg=[0]*len(nodespset)

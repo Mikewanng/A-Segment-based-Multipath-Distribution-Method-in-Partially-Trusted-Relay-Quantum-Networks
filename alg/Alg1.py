@@ -56,7 +56,7 @@ class Alg1:
                 return [[self.path,self.sp,self.fsp]]
         return [[self.path,self.sp,self.fsp]]
 
-    def alg1t(self,topo,source,des,sth):#找到满足安全概率阈值的路径
+    def alg1maxs(self,topo,source,des,sth=1):#找到最大安全性的路径
         
         g=topo
         
