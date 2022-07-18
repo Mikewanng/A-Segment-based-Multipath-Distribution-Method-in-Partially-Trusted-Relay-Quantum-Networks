@@ -16,12 +16,12 @@ g=Net().network
 g1=Topo().CreatNodeEdgeSet(g,10,6,0.9,0)
 g2=Topo().CreatTopo(g1)
 
-nodespset=[0.6,0.65,0.7,0.75,0.8,0.85,0.9]
+nodespset=np.arange(1,10,1)
 sth=0.9
 count=0
-filename='maxSp_vs_nodesp'+'time='+str(time.time())+'.txt'
+filename='maxSp_vs_tr'+'time='+str(time.time())+'.txt'
 fp = open(filename, 'w')
-fp.write('nodesp    asp1    rsp1    gsp1    rr1    rrg1    acost1    rcost1    keyn1    time1    asp2    rsp2    gsp2    rr2    rrg2   acost2    rcost2    keyn2    time2    aspr    rspr    gspr    rrr    rrgr   acostr   rcostr   keynr    timer\n')
+fp.write('tr    asp1    rsp1    gsp1    rr1    rrg1    acost1    rcost1    keyn1    time1    asp2    rsp2    gsp2    rr2    rrg2   acost2    rcost2    keyn2    time2    aspr    rspr    gspr    rrr    rrgr   acostr   rcostr   keynr    timer\n')
 #平均安全概率总运行次数
 sp1=[0]*len(nodespset)
 sp2=[0]*len(nodespset)
@@ -80,20 +80,26 @@ for i in range(runcount):
     
     print(i)
     
-    g1=Topo().CreatNodeEdgeSet(g,10,4,0.9,0)
-    g2=Topo().CreatTopo(g1)
+    
+    
     source=random.randint(0,len(g2[0])-1)
     while g2[1][source]==1:
         source=random.randint(0,len(g2[0])-1)
     des=random.randint(0,len(g2[0])-1)
     while des==source or g2[1][des]==1:
         des=random.randint(0,len(g2[0])-1)
-    
-    print(source,des)    
+    t=[0.9]*len(g2[0])
+        
+    print(source,des)     
     for j in range(len(nodespset)):#循环nodesp
 
-        print('nodesp=',nodespset[j])
-        Topo().Changenodesp(g2,nodespset[j])
+        g1=Topo().CreatNodeEdgeSet(g,10,nodespset[j],0.9,0)
+        g2=Topo().CreatTopo(g1)
+        print('trnum=',nodespset[j])
+        t=Topo().creattr(t,nodespset[j],[source,des])
+        g2[1]=t
+
+        print(t)
         t1=Alg1().alg1maxs(copy.deepcopy(g2),source,des)
         print(t1)
         if t1[0][2]>0:

@@ -3,6 +3,8 @@ from Node import *
 import random,math
 import numpy as np
 import networkx as nx
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 class Topo(object):#定义拓扑
     def __init__(self):
         self.node=[]
@@ -32,7 +34,7 @@ class Topo(object):#定义拓扑
             self.topo[0][dictnode.get(edge.fr)][dictnode.get(edge.to)]=Link(dictnode.get(edge.fr),dictnode.get(edge.to),edge.c)
             
         return self.topo
-    def CreatNodeEdgeSet(self,basic_node_edge_set,c=1000,TrustednodeNum=4,nodesp=0.9,option=0 ):#option=0默认为单向边
+    def CreatNodeEdgeSet(self,basic_node_edge_set,c=50,TrustednodeNum=4,nodesp=0.9,option=0 ):#option=0默认为无向图
         newedge=[] #存储Link结构的边
         newnode=[] #存储节点以及节点安全概率
         
@@ -61,13 +63,17 @@ class Topo(object):#定义拓扑
         return [newnode,newedge]
 
     def TopoUpdate(self,g,path):#删去路径上的不可信节点及路径
+        for i in range(len(path)-1):
+            g[0][path[i]][path[i+1]].dellink()
+            g[0][path[i+1]][path[i]].dellink()
         nodelist=path[1:-1]
         for i in range(len(g[0])):
             for j in range(len(g[0][i])):
                 if i in  nodelist or j in nodelist:
                     if g[1][j]<1 and g[0][i][j].Is_connected==True:
                         g[0][i][j].dellink()
-        
+                        g[0][j][i].dellink()
+                    
     def creattr(self,a,n,sd):
         count=0
         for i in a:
@@ -81,8 +87,8 @@ class Topo(object):#定义拓扑
             count+=1
         return a
 
-                        g[0][j][i].dellink()
-    def TopoUpdater(self,g,path):#删去路径上的 对比算法。
+                        
+    def TopoUpdater(self,g,path):#删去路径上的所有节点 对比算法。
         nodelist=path[1:-1]
         for i in range(len(g[0])):
             for j in range(len(g[0][i])):
@@ -170,14 +176,17 @@ class Topo(object):#定义拓扑
                         edges.append((nodes[i], nodes[j]))
                         edges.append((nodes[j], nodes[i]))
 
-            if flag==1:
-                g = nx.Graph()  # create graph
-                g.add_nodes_from(nodes)  # add nodes
-                g.add_edges_from(edges)  # add edges
-                nodes_position = dict(zip(nodes, positions))  #
-                node_labels = dict(zip(nodes, nodes))  # label of nodes
-                edge_labels = dict(zip(edges, edges_cost))  # label of edges
-                nx.draw_networkx_nodes(g, nodes_position, node_size=100, node_color="#6CB6FF")  # draw nodes
-                nx.draw_networkx_edges(g, nodes_position, edges)  # draw edges
-                nx.draw_networkx_labels(g, nodes_position, node_labels)  # draw label of nodes
+        if flag==1:
+            g = nx.Graph()  # create graph
+            g.add_nodes_from(nodes)  # add nodes
+            g.add_edges_from(edges)  # add edges
+            nodes_position = dict(zip(nodes, positions))  #
+            node_labels = dict(zip(nodes, nodes))  # label of nodes
+            edge_labels = dict(zip(edges, edges_cost))  # label of edges
+            nx.draw_networkx_nodes(g, nodes_position, node_size=100, node_color="#6CB6FF")  # draw nodes
+            nx.draw_networkx_edges(g, nodes_position, edges)  # draw edges
+            nx.draw_networkx_labels(g, nodes_position, node_labels)  # draw label of nodes
+            
+            plt.axis('off')
+            plt.show()
         return [nodes, edges]

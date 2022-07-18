@@ -1,5 +1,5 @@
 ﻿from Alg1 import *
-import copy,sys
+import copy,sys,queue
 class Alg2:
     def __init__(self):
         self.path=[] #储存找到的路径
@@ -28,15 +28,7 @@ class Alg2:
                 #判断能否满足安全性需求
                 sp=Sp().segsp(t)
                 if sp>=sth:
-                    """
-                    #重组格式
-                    t0=[]
-                    t1=[]
-                    t2=[]
-                    for i in t:
-                        t0.append(i[0])
-                        t1.append(i[1])
-                        t2.append(i[2])"""
+                    
                     return t
                     
     def alg2n(self,topo,source,des,n):#找出n条路径并返回
@@ -76,59 +68,107 @@ class Alg2:
             return t
         
 
-    def alg2maxs(self,topo,source,des,sth=1):#找到最大安全性的路径
+    def alg2maxs(self,topo,source,des,sth=1):#找到最大安全性的路径,分段的路径数量尽量接近。
+        
+             
         t=[]
         curnode=source
         #找出当前最近中继距离sd
         #minrelay=self.findminrelay(topo,source,des)
         while curnode!=des:
             minrelay=self.findminrelay(topo,source,des)
+            
             nseg=Alg1().alg1maxs(copy.deepcopy(topo),curnode,des)
             if minrelay==-1:
-                t.append(nseg)
+                t+=nseg
                 break
-            seg1=Alg1().alg1maxs(topo,curnode,minrelay)
-            tmptopo=copy.deepcopy(topo)
-            seg2=Alg1().alg1maxs(tmptopo,minrelay,des)
-
-            #判断分段
-            if seg1[0][2]*seg2[0][2]>nseg[0][2]:
+            for i in range(2,6):
+                tmp=[]
+                seg1=Alg1().alg1maxn(topo,curnode,minrelay,i)
+                tmptopo=copy.deepcopy(topo)
+                seg2=Alg1().alg1maxn(tmptopo,minrelay,des,i)
+                if seg1[0][2]*seg2[0][2]>nseg[0][2]:
+                    
+                    tmp=seg1
+            if tmp!=[]:
                 curnode=minrelay
                 t+=seg1
             else:
                 t+=nseg
                 break
         return t
-
-
+    def alg2max(self,topo,source,des,sth=1):
+        t=[] #返回值
+        pathchain=[source]
+        curnode=source
+        #先找出两条的分段路径然后在每一段上增加
+        while curnode!=des:
+            minrelay=self.findminrelay(topo,source,des)
+            g1=copy.deepcopy(topo)
+            nseg=Alg1().alg1maxn(g1,curnode,des,2)
+            if minrelay==-1:
+                t+=nseg
+                topo=g1
+                break
             
-            
-            
-            
-            
-            
-            #先调用alg1找出普通多路径的数量
-        tmp=Alg1().alg1maxs(copy.deepcopy(topo),source,des)
-        fsp=tmp[0][2]
-        #如果alg1能够满足那么确定路径数量
-        if fsp>=sth:
-            path_num=len(tmp[0][0])
-            if path_num==1:#不需要分段
-                return tmp
-            return self.alg2n(copy.deepcopy(topo),source,des,path_num)
-            
-        else:#算法1不能满足，那么依次递增路径数量直到满足sth
-            for n in range(2,100):
-                t=self.alg2n(copy.deepcopy(topo),source,des,n)
-                #判断返回路径是否为空
+            tmp=[]
+            seg1=Alg1().alg1maxn(topo,curnode,minrelay,2) #找出当前节点到最近可信中继节点
+            g2=copy.deepcopy(topo)
+            seg2=Alg1().alg1maxn(topo,minrelay,des,2) #找出最近可信中继节点到目的节点
+            if seg1[0][2]*seg2[0][2]>nseg[0][2]: #如果分段后带来更大的安全性
+                curnode=minrelay
+                pathchain.append(curnode)
+                t+=seg1
+                topo=g2
+            else:
+                t+=nseg
+                topo=g1
+                break
+        pathchain.append(des)
+        tmpsd=[]
+        tt=[]
+        for i in range(len(pathchain)-1):
+            tt.append([pathchain[i],pathchain[i+1]])
+        #每一段单独找路
+        while True:
+            tmpsd=copy.deepcopy(tt)
+            while tmpsd!=[]:
+                p=queue.PriorityQueue()
+                for i in tmpsd:
+                    topotable=Topo().Toporeduce(copy.deepcopy(topo))
+                    tmp_path,tmp_sp=Dijkstra().dijkstra(topotable,i[0],i[1])
+                    if tmp_path!=[]:
+                        p.put((1-tmp_sp,tmp_path))
+                    if p.empty():
+                        return t
+                chosed_path=p.get()
                 for i in t:
-                    if i[0]==[]:#无法找到足够路径数量
-                        return [[[],[],0]]
-                #判断能否满足安全性需求
-                sp=Sp().segsp(t)
-                if sp>=sth:
+                    if i[0][0][0]==chosed_path[1][0] and i[0][0][-1]==chosed_path[1][-1]:
+                        i[0].append(chosed_path[1])
+                        i[1].append(chosed_path[0])
+                        i[2]=Sp().CalSumSecurityProbability(i[2],chosed_path[0])
+                        Topo().TopoUpdate(topo,chosed_path[1])
+                        tmpsd.remove([chosed_path[1][0],chosed_path[1][-1]])
+                        break
+
+
+            
+
+
+        return t
                     
-                    return t
+                    
+               
+            
+
+            
+            
+            
+            
+            
+            
+            
+        
     def findminrelay(self,topo,source,des):#找出最近relay
         sumlen=1000000
         #找出最近的可信点且距离起点更近

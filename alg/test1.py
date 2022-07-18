@@ -12,8 +12,10 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 count=1000
 
+
+
 g=Net().network
-g1=Topo().CreatNodeEdgeSet(g,10,4,0)
+g1=Topo().CreatNodeEdgeSet(g,10,4,0.95)
 g2=Topo().CreatTopo(g1)
 source=random.randint(0,len(g2[0])-1)
 des=random.randint(0,len(g2[0])-1)
@@ -59,8 +61,7 @@ time2=[0]*len(sth)
 timer=[0]*len(sth)
 
 f=0
-
-while f==0:
+for i in range(1000):
     
     source=random.randint(0,len(g2[0])-1)
     des=random.randint(0,len(g2[0])-1)
@@ -70,61 +71,23 @@ while f==0:
     for j in range(len(sth)):
         print(sth[j])
         ts1=time.time()
-        t1=Alg1().alg1(copy.deepcopy(g2),source,des,sth[j])
+        t1=Alg1().alg1maxs(copy.deepcopy(g2),source,des)
+        print(t1)
         t21=time.time()
-        
-        ts2=time.time()
-        t2=Alg2().alg2(copy.deepcopy(g2),source,des,sth[j])
-        t22=time.time()
-        if t1==t2:
-            continue
-        
         tsr=time.time()
-        tr=Rr().rr(copy.deepcopy(g2),source,des,sth[j])
+        tr=Rr().rrmaxs(copy.deepcopy(g2),source,des)
+        print(tr)
         t2r=time.time()
+
+        ts2=time.time()
+        t2=Alg2().alg2max(copy.deepcopy(g2),27,2)
+        print(t2)
+        t22=time.time()
+     
+        
+       
         
 
-        if t1!=t2:
-            countk[j]+=1
-            #alg1
-            time1[j]+=t21-ts1
-            print(t1)
-            if t1[0][2]>0:
-                count1[j]+=1
-                sp1[j]+=t1[0][2]
-                keynum1[j]+=1
-            for z in t1:
-                for path in z[0]:
-                    cost1[j]+=len(path)-1
-            #alg2
-            print(t2)
-            time2[j]+=t22-ts2
-            #去除分段的重复路径
-            for z in t2:
-                for path in z[0]:
-                    cost2[j]+=len(path)-1
-            tmp=1
-            for p in t2:
-                tmp*=p[2]
-            if t2[0][2]==0:
-                tmp=0
-            if tmp>0:
-                keynum2[j]+=Seclev().segsl(t2,sth[j])
-                count2[j]+=1
-                sp2[j]+=tmp
-            #rr
-            timer[j]+=t2r-tsr
-            print(tr)
-            if tr[0][2]>0:
-                countr[j]+=1
-                spr[j]+=tr[0][2]
-                keynumr[j]+=1
-            for z in tr:
-                for path in z[0]:
-                    costr[j]+=len(path)-1
-        for i in countk:
-            if i>count:
-                f=1
 for j in range(len(sp1)):#响应
     if count1[j]>0:
         sp1r[j]=sp1[j]/count1[j]
@@ -136,6 +99,15 @@ for j in range(len(sp1)):#响应
     if countr[j]>0:
         sprr[j]=spr[j]/countr[j]
         costrr[j]=costr[j]/countr[j]
+
+
+
+
+
+
+
+
+
 
 for j in range(len(sp1)):#平均
     sp1[j]/=count
