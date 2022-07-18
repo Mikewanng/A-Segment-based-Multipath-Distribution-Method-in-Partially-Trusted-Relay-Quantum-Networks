@@ -89,6 +89,9 @@ class Topo(object):#定义拓扑
 
                         
     def TopoUpdater(self,g,path):#删去路径上的所有节点 对比算法。
+        for i in range(len(path)-1):
+            g[0][path[i]][path[i+1]].dellink()
+            g[0][path[i+1]][path[i]].dellink()
         nodelist=path[1:-1]
         for i in range(len(g[0])):
             for j in range(len(g[0][i])):

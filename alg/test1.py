@@ -61,7 +61,7 @@ time2=[0]*len(sth)
 timer=[0]*len(sth)
 
 f=0
-for i in range(1000):
+for i in range(100):
     
     source=random.randint(0,len(g2[0])-1)
     des=random.randint(0,len(g2[0])-1)
@@ -72,7 +72,9 @@ for i in range(1000):
         print(sth[j])
         ts1=time.time()
         t1=Alg1().alg1maxs(copy.deepcopy(g2),source,des)
+        
         print(t1)
+        tmpslt=Seclev().seclev(t1[0])
         t21=time.time()
         tsr=time.time()
         tr=Rr().rrmaxs(copy.deepcopy(g2),source,des)
@@ -80,7 +82,7 @@ for i in range(1000):
         t2r=time.time()
 
         ts2=time.time()
-        t2=Alg2().alg2max(copy.deepcopy(g2),27,2)
+        t2=Alg2().alg2max(copy.deepcopy(g2),source,des)
         print(t2)
         t22=time.time()
      
