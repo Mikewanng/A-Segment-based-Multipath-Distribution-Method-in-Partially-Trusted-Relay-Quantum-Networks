@@ -14,8 +14,10 @@ count=1000
 
 
 
-g=Net().network
-g1=Topo().CreatNodeEdgeSet(g,10,4,0.95)
+#g=Net().network
+
+g=Topo().create_random_topology(100)
+g1=Topo().CreatNodeEdgeSet(g,10,6,0.95)
 g2=Topo().CreatTopo(g1)
 source=random.randint(0,len(g2[0])-1)
 des=random.randint(0,len(g2[0])-1)
@@ -72,19 +74,22 @@ for i in range(100):
         print(sth[j])
         ts1=time.time()
         t1=Alg1().alg1maxs(copy.deepcopy(g2),source,des)
-        
+        if t1[0][2]==1:
+            continue
         print(t1)
-        tmpslt=Seclev().sl(t1,sth)
-
+        
+        print(Seclev().sl(t1,sth[j]))
         t21=time.time()
         tsr=time.time()
         tr=Rr().rrmaxs(copy.deepcopy(g2),source,des)
         print(tr)
+        print(Seclev().sl(tr,sth[j]))
         t2r=time.time()
 
         ts2=time.time()
         t2=Alg2().alg2max(copy.deepcopy(g2),source,des)
         print(t2)
+        print(Seclev().sl(t2,sth[j]))
         t22=time.time()
      
         

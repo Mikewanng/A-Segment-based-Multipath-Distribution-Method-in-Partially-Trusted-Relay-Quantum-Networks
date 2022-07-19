@@ -82,7 +82,7 @@ class Seclev:#计算安全等级表，得到最终密钥量
         for i in range(len(tmpsegpathsp[0][0])):
             t.append(1)
         #排序
-        for i in tmtmpsegpathsp:
+        for i in tmpsegpathsp:
             i[0].sort()
             t.sort()
             for j in range(len(t)):

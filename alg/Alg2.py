@@ -124,8 +124,8 @@ class Alg2:
                 t+=nseg
                 topo=g1
                 break
-        pathchain.append(des)
-        tmpsd=[]
+        pathchain.append(des)   #源节点与可信中继节点以及目的节点的链用以查找一段路径
+        #tmpsd=[]
         tt=[]
         for i in range(len(pathchain)-1):
             tt.append([pathchain[i],pathchain[i+1]])
@@ -145,8 +145,8 @@ class Alg2:
                 for i in t:
                     if i[0][0][0]==chosed_path[1][0] and i[0][0][-1]==chosed_path[1][-1]:
                         i[0].append(chosed_path[1])
-                        i[1].append(chosed_path[0])
-                        i[2]=Sp().CalSumSecurityProbability(i[2],chosed_path[0])
+                        i[1].append(1-chosed_path[0])
+                        i[2]=Sp().CalSumSecurityProbability(i[2],1-chosed_path[0])
                         Topo().TopoUpdate(topo,chosed_path[1])
                         tmpsd.remove([chosed_path[1][0],chosed_path[1][-1]])
                         break
