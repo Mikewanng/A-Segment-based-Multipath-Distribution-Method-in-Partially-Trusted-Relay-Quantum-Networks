@@ -74,7 +74,8 @@ for i in range(100):
         t1=Alg1().alg1maxs(copy.deepcopy(g2),source,des)
         
         print(t1)
-        tmpslt=Seclev().seclev(t1[0])
+        tmpslt=Seclev().sl(t1,sth)
+
         t21=time.time()
         tsr=time.time()
         tr=Rr().rrmaxs(copy.deepcopy(g2),source,des)

@@ -12,18 +12,37 @@ class Seclev:#计算安全等级表，得到最终密钥量
 
         maxpath=100000
         overpath=[]
+        segpathsp=[]
         #首先找出每一段路径的最小路径数量
         for i in range(len(pathsecurityset)):
             if len(pathsecurityset[i][0])<maxpath:
                 maxpath=len(pathsecurityset[i][0])
                 overpath.append(i)
-        #将大于此路径数量的段进行安全性提升
-        for i in overpath:
-            for j in range(len(pathsecurityset[i][0])-maxpath):
-                up_sec_level(pathsecurityset[i])
+        #计算每一段的安全等级表
+        for i in pathsecurityset:
+            segpathsp.append(self.seclev(i))
+
+        tmpsegpathsp=[] #将大于maxpath的段进行安全性提升到maxpath-1
+        for i in range(len(pathsecurityset)):
+            tmpsegpathsp.append(segpathsp[i][maxpath-1])
         #然后进行段间匹配判断当前最小的安全性能否满足sth，满足则输出，否则继续提升每一段的安全等级
+        count=maxpath-1
+        while True:
+            if self.IsSastifySth(tmpsegpathsp,sth):
+                return len(tmpsegpathsp[0][0])
+            else: #不满足则进行下一次安全等级提升
+                if  count==0:      #如果已经是最高安全等级，那么输出为0，无法满足sth
+                    return 0;
+                else: #提升安全等级
+                    count-=1
+                    tmpsegpathsp=[] #将大于maxpath的段进行安全性提升到count
+                    for i in range(len(pathsecurityset)):
+                        tmpsegpathsp.append(segpathsp[i][count])
 
-
+        
+                    
+                    
+        """           
         slt=[[],[]] #初始化表
         q=PriorityQueue()
         #将路径安全概率放入队列
@@ -46,6 +65,7 @@ class Seclev:#计算安全等级表，得到最终密钥量
                 t=slt[1][i]
                 break
         return t
+    """
 
     def segsl(self,pathsecuritysetset,sth):#计算不同分段中的满足sth的最大密钥量
         tmpnum=[]
@@ -56,6 +76,23 @@ class Seclev:#计算安全等级表，得到最终密钥量
             if tmpn<min:
                 min=tmpn
         return min
+
+    def IsSastifySth(self,tmpsegpathsp,sth):
+        t=[]
+        for i in range(len(tmpsegpathsp[0][0])):
+            t.append(1)
+        #排序
+        for i in tmtmpsegpathsp:
+            i[0].sort()
+            t.sort()
+            for j in range(len(t)):
+                t[j]*=i[0][len(t)-1-j]
+        t.sort()
+        if(t[0]>=sth):
+            return True
+        else:
+            return False
+
 
     def up_sec_level(self,pathsecurityset):
         pass
