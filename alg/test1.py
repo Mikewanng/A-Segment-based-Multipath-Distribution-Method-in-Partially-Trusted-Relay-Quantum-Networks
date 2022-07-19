@@ -17,7 +17,7 @@ count=1000
 #g=Net().network
 
 g=Topo().create_random_topology(100)
-g1=Topo().CreatNodeEdgeSet(g,10,6,0.95)
+g1=Topo().CreatNodeEdgeSet(g,10,5,0.8)
 g2=Topo().CreatTopo(g1)
 source=random.randint(0,len(g2[0])-1)
 des=random.randint(0,len(g2[0])-1)
