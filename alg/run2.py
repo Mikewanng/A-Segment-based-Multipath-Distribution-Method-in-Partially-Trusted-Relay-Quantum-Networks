@@ -13,8 +13,11 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 run_time=500  #运行次数
 
-
-filename='MaxSp_vs_TrNode'+str(run_time)+'time='+str(time.time())+'.txt'
+a=0.3
+b=3
+nodenum=50
+nodesp=0.8
+filename='MaxSp_vs_TrNode'+str(run_time)+'time='+str(time.time())+'nodesp='+str(nodesp)+'a='+str(a)+"b="+str(b)+"nodenum="+str(nodenum)+'.txt'
 fp = open(filename, 'w')
 fp.write('Trnode    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
 trnode=np.arange(1,10,1)
@@ -43,7 +46,7 @@ for count in range(run_time):
     if count!=0:
         print("预计剩余时间为：",(time.time()-start_time)*(run_time-count)/count/60,"min")
 
-    random_topo=Topo().create_random_topology(50,0.4,5) #随机拓扑生成：点边集合
+    random_topo=Topo().create_random_topology(nodenum,a,b) #随机拓扑生成：点边集合
     source=random.randint(0,len(random_topo[0])-1)
     des=random.randint(0,len(random_topo[0])-1)
     while des==source:
@@ -52,7 +55,7 @@ for count in range(run_time):
 
     for j in range(len(trnode)):
         #更改可信节点数量
-        NodeEdgeSet=Topo().CreatNodeEdgeSet(random_topo,10,trnode[j],0.9)
+        NodeEdgeSet=Topo().CreatNodeEdgeSet(random_topo,10,trnode[j],nodesp)
         topo=Topo().CreatTopo(NodeEdgeSet)
         
 

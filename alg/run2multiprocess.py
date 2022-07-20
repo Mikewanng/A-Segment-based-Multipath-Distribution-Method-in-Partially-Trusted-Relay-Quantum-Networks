@@ -16,10 +16,10 @@ from multiprocessing import Process
 
 
 def run(self,a=0.3,b=3,nodenum=50):
-    run_time=500  #运行次数
+    run_time=10  #运行次数
 
 
-    filename='MaxSp_vs_TrNode'+str(run_time)+'time='+str(time.time())+'a_b_nodenum'+str(a)+str(b)+str(nodenum)+'.txt'
+    filename='MaxSp_vs_TrNode'+str(run_time)+'time='+str(time.time())+'a='+str(a)+"b="+str(b)+"nodenum="+str(nodenum)+'.txt'
     fp = open(filename, 'w')
     fp.write('Trnode    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
     trnode=np.arange(1,10,1)
