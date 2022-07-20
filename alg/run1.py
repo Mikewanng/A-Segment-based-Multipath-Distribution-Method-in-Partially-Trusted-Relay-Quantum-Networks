@@ -11,7 +11,7 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-run_time=1000  #运行次数
+run_time=100  #运行次数
 
 a=0.3
 b=3
@@ -39,7 +39,9 @@ keynum_7_sgr=[0]*len(node_sp)
 
 keynum_5_random=[0]*len(node_sp)
 keynum_5_sgr=[0]*len(node_sp)
-
+#记录分段的次数
+segnum=[0]*len(trnode)
+start_time=time.time()
 
 start_time=time.time()
 for count in range(run_time):
@@ -72,6 +74,8 @@ for count in range(run_time):
         
         t2=Alg2().alg2max(copy.deepcopy(topo),source,des)
         print(t2)
+        if len(t2)>1:
+            segnum[j]+=1
         totalsp=1
         for i in t2:
             totalsp*=i[2]
@@ -100,6 +104,8 @@ for j in range(len(node_sp)):
 
 for j in range(len(node_sp)):
     fp.write(str(node_sp[j])+'    '+str(avemaxsp_random[j])+'    '+str(avemaxsp_sgr[j])+'    '+str(resource_consume_random[j])+'    '+str(resource_consume_sgr[j])+'    '+str(keynum_9_random[j])+'    '+str(keynum_9_sgr[j])+'    '+str(keynum_7_random[j])+'    '+str(keynum_7_sgr[j])+'    '+str(keynum_5_random[j])+'    '+str(keynum_5_sgr[j])+'\n')
+for j in segnum:
+    fp.write(str(j)+"    ")
 fp.close()
 #最大安全概率
 fig = plt.figure()
