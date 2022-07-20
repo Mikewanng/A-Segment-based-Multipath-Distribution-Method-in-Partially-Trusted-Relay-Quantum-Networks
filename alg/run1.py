@@ -40,7 +40,7 @@ keynum_7_sgr=[0]*len(node_sp)
 keynum_5_random=[0]*len(node_sp)
 keynum_5_sgr=[0]*len(node_sp)
 #记录分段的次数
-segnum=[0]*len(trnode)
+segnum=[0]*len(node_sp)
 start_time=time.time()
 
 start_time=time.time()
