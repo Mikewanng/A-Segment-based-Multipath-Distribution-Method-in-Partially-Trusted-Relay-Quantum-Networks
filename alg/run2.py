@@ -43,7 +43,7 @@ for count in range(run_time):
     if count!=0:
         print("预计剩余时间为：",(time.time()-start_time)*(run_time-count)/count/60,"min")
 
-    random_topo=Topo().create_random_topology(50,0.4,3) #随机拓扑生成：点边集合
+    random_topo=Topo().create_random_topology(50,0.4,5) #随机拓扑生成：点边集合
     source=random.randint(0,len(random_topo[0])-1)
     des=random.randint(0,len(random_topo[0])-1)
     while des==source:
