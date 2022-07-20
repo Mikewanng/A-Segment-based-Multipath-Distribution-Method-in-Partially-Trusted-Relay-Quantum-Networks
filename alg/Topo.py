@@ -171,7 +171,7 @@ class Topo(object):#定义拓扑
                     j=random.randint(0,nodes_num-1)
                     while i==j:
                         j=random.randint(0,nodes_num-1)
-                    p =4* b * math.exp(-distance[i][j] / (max_length * a))/nodes_num  ##a = alpha, b = beta
+                    p =5* b * math.exp(-distance[i][j] / (max_length * a))/nodes_num  ##a = alpha, b = beta
                     if random.random() < p:
                         edges_cost.append(round(distance[i][j], 1))
                         degree[i]+=1

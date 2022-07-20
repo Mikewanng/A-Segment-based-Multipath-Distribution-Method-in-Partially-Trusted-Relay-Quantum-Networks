@@ -36,9 +36,11 @@ keynum_5_random=[0]*len(node_sp)
 keynum_5_sgr=[0]*len(node_sp)
 
 
-
+start_time=time.time()
 for count in range(run_time):
     print("running:",count,"round")
+    if count!=0:
+        print("预计剩余时间为：",(time.time()-start_time)*(run_time-count)/count/60,"min")
     random_topo=Topo().create_random_topology(100) #随机拓扑生成：点边集合
     NodeEdgeSet=Topo().CreatNodeEdgeSet(random_topo,10,5,0.8)
     topo=Topo().CreatTopo(NodeEdgeSet)

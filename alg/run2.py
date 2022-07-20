@@ -11,7 +11,7 @@ import copy,random,time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-run_time=10  #运行次数
+run_time=500  #运行次数
 
 
 filename='MaxSp_vs_TrNode'+str(run_time)+'time='+str(time.time())+'.txt'
@@ -37,10 +37,13 @@ keynum_5_sgr=[0]*len(trnode)
 
 #记录分段的次数
 segnum=[0]*len(trnode)
-
+start_time=time.time()
 for count in range(run_time):
-    print("running:",count,"round")
-    random_topo=Topo().create_random_topology(100) #随机拓扑生成：点边集合
+    print("running process:",count*100/run_time,"%")
+    if count!=0:
+        print("预计剩余时间为：",(time.time()-start_time)*(run_time-count)/count/60,"min")
+
+    random_topo=Topo().create_random_topology(50,0.4,3) #随机拓扑生成：点边集合
     source=random.randint(0,len(random_topo[0])-1)
     des=random.randint(0,len(random_topo[0])-1)
     while des==source:
