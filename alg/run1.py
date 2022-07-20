@@ -17,7 +17,7 @@ a=0.3
 b=3
 nodenum=50
 trnum=5
-filename='MaxSp_vs_NodeSp'+str(run_time)+'time='+str(time.time())+'nodesp='+str(nodesp)+'a='+str(a)+"b="+str(b)+"nodenum="+str(nodenum)+'.txt'
+filename='MaxSp_vs_NodeSp'+str(run_time)+'trnum='+str(trnum)+'a='+str(a)+"b="+str(b)+"nodenum="+str(nodenum)+'.txt'
 
 
 fp = open(filename, 'w')
