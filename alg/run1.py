@@ -13,8 +13,13 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 run_time=1000  #运行次数
 
+a=0.3
+b=3
+nodenum=50
+trnum=5
+filename='MaxSp_vs_NodeSp'+str(run_time)+'time='+str(time.time())+'nodesp='+str(nodesp)+'a='+str(a)+"b="+str(b)+"nodenum="+str(nodenum)+'.txt'
 
-filename='MaxSp_vs_NodeSp'+str(run_time)+'time='+str(time.time())+'.txt'
+
 fp = open(filename, 'w')
 fp.write('NodeSp    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
 node_sp=np.arange(0.5,1,0.05)
@@ -41,8 +46,8 @@ for count in range(run_time):
     print("running:",count,"round")
     if count!=0:
         print("预计剩余时间为：",(time.time()-start_time)*(run_time-count)/count/60,"min")
-    random_topo=Topo().create_random_topology(100) #随机拓扑生成：点边集合
-    NodeEdgeSet=Topo().CreatNodeEdgeSet(random_topo,10,5,0.8)
+    random_topo=Topo().create_random_topology(nodenum,a,b) #随机拓扑生成：点边集合
+    NodeEdgeSet=Topo().CreatNodeEdgeSet(random_topo,10,trnum,0.8)
     topo=Topo().CreatTopo(NodeEdgeSet)
     source=random.randint(0,len(topo[0])-1)
     des=random.randint(0,len(topo[0])-1)
