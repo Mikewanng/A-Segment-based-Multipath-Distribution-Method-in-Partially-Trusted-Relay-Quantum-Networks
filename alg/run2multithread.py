@@ -132,7 +132,7 @@ def run(self,a=0.3,b=3,nodenum=50):
     plt.plot(trnode,keynum_5_random,color='red')
     plt.plot(trnode,keynum_5_sgr,color='green')
     plt.title("Key rate")
-    plt.xlabel('nodesp')
+    plt.xlabel('trnode')
     plt.ylabel('Key rate')
     plt.show()
 
