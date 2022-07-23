@@ -13,7 +13,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 run_time=500  #运行次数
 
-a=0.3
+a=0.28
 b=3
 nodenum=50
 nodesp=0.8
