@@ -21,7 +21,7 @@ filename='MaxSp_vs_NodeSp'+str(run_time)+'trnum='+str(trnum)+'a='+str(a)+"b="+st
 
 
 fp = open(filename, 'w')
-fp.write('NodeSp    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
+fp.write('NodeSp    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
 node_sp=np.arange(0.5,1,0.05)
 
 #最大安全性

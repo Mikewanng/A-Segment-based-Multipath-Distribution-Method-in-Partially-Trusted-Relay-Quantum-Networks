@@ -25,7 +25,7 @@ def run1(_run_time=1000,_a=0.3,_b=3,_nodenum=100,_trnum=10):
 
 
     fp = open(filename, 'w')
-    fp.write('NodeSp    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
+    fp.write('NodeSp    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
     node_sp=np.arange(0.5,1,0.05)
 
     #最大安全性
@@ -144,7 +144,7 @@ def run2(_run_time=1000,_a=0.3,_b=3,_nodenum=100,_nodesp=0.8):
     nodesp=_nodesp
     filename='MaxSp_vs_TrNode'+str(run_time)+'nodesp='+str(nodesp)+'a='+str(a)+"b="+str(b)+"nodenum="+str(nodenum)+'.txt'
     fp = open(filename, 'w')
-    fp.write('Trnode    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
+    fp.write('Trnode    aveMaxSp_random    aveMaxSp_sgr    资源利用率_random    资源利用率_sgr    重构0.9后密钥量_random    重构0.9后密钥量_sgr    重构0.7后密钥量_random    重构0.7后密钥量_sgr    重构0.5后密钥量_random    重构0.5后密钥量_sgr\n')
     trnode=np.arange(1,10,1)
 
     #最大安全性
